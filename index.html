@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzería Mamma Mia!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0; 
+        }
+        .hero {
+            background-image: url('Header.jpg'); 
+            background-size: cover;
+            height: 400px;
+            color: red;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 50px; 
+        }
+        .menu-button {
+            margin-top: -20px; 
+        }
+        .menu-section {
+            margin: 20px 0;
+        }
+        .footer {
+            background-color: #343a40;
+            color: red;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer p {
+            color: red; 
+            font-weight: bold; 
+        }
+        .navbar-header-image {
+            width: 120%; 
+            max-height: 120px; 
+            object-fit: cover; 
+        }
+        .navbar-dark {
+            background-color: #000000; 
+        }
+        .navbar-dark .navbar-brand,
+        .navbar-dark .nav-link {
+            color: red; 
+        }
+        .navbar-text {
+            color: white; 
+            font-weight: bold; 
+        }
+        .total-amount {
+            color: red; 
+            font-weight: bold; 
+        }
+        .message-alert {
+            display: none; 
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 1000; 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            text-align: center; 
+            width: 80%; 
+            background-color: black; 
+            color: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+        }
+        .error-message {
+            color: red;
+            background-color: #ffcccc; 
+            border: 1px solid red; 
+            padding: 10px; 
+            border-radius: 5px; 
+            display: none;
+            margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="messageAlert" class="message-alert"></div>
+
+    <header class="bg-light text-center py-2">
+        <img src="Header.jpg" alt="Pizzería Mamma Mia!" class="navbar-header-image">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">Pizzería Mamma Mia</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Logout">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    Total: <strong class="total-amount">25000</strong>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Pizzería Mamma Mia!</h1>
+        <p><h2>¡Tenemos las Mejores Pizzas que podrás encontrar!</h2></p>
+        <a href="#menu" class="btn btn-primary menu-button"> Menú</a>
+    </div>
+
+    <section id="about" class="container text-center">
+        <h2>Acerca de Nosotros</h2>
+        <p>En Pizzería Mamma Mia, nos apasiona ofrecerte las mejores pizzas con ingredientes frescos y recetas tradicionales. ¡Ven y disfruta de una experiencia culinaria única!</p>
+    </section>
+
+    <section id="menu" class="menu-section container">
+        <h2 class="text-center">Nuestras Pizzas</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="01.jpg" class="card-img-top" alt="Pizza Napolitana">
+                    <div class="card-body">
+                        <h5 class="card-title">Pizza Napolitana</h5>
+                        <p class="card-text">Mozzarella, Tomate, Jamón, Orégano.</p>
+                        <p class="card-text"><strong>$5950</strong></p>
+                        <div class="quantity-control">
+                            <button class="btn btn-secondary" onclick="updateQuantity('napolitana', -1)">-</button>
+                            <span id="napolitanaQty">0</span>
+                            <button class="btn btn-secondary" onclick="updateQuantity('napolitana', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="02.jpg" class="card-img-top" alt="Pizza Española">
+                    <div class="card-body">
+                        <h5 class="card-title">Pizza Española</h5>
+                        <p class="card-text">Mozzarella, Gorgonzola, Parmesano, Provolone.</p>
+                        <p class="card-text"><strong>$6950</strong></p>
+                        <div class="quantity-control">
+                            <button class="btn btn-secondary" onclick="updateQuantity('espanola', -1)">-</button>
+                            <span id="espanolaQty">0</span>
+                            <button class="btn btn-secondary" onclick="updateQuantity('espanola', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="03.jpg" class="card-img-top" alt="Pizza Pepperoni">
+                    <div class="card-body">
+                        <h5 class="card-title">Pizza Pepperoni</h5>
+                        <p class="card-text">Mozzarella, Pepperoni, Orégano.</p>
+                        <p class="card-text"><strong>$6950</strong></p>
+                        <div class="quantity-control">
+                            <button class="btn btn-secondary" onclick="updateQuantity('pepperoni', -1)">-</button>
+                            <span id="pepperoniQty">0</span>
+                            <button class="btn btn-secondary" onclick="updateQuantity('pepperoni', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <h3>Total: <span id="totalAmount">0</span></h3>
+            <button class="btn btn-success" onclick="pay()">Pagar</button>
+        </div>
+    </section>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Contraseña (mínimo 6 caracteres)</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                            <div class="error-message" id="registerError"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Contraseña (mínimo 6 caracteres)</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <div class="error-message" id="loginError"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Pizzería Mamma Mia. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let total = 0;
+
+        function updateQuantity(pizza, change) {
+            const qtyElement = document.getElementById(pizza + 'Qty');
+            let currentQty = parseInt(qtyElement.innerText);
+            currentQty += change;
+            if (currentQty < 0) currentQty = 0;
+            qtyElement.innerText = currentQty;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            total = 0;
+            total += parseInt(document.getElementById('napolitanaQty').innerText) * 5950;
+            total += parseInt(document.getElementById('espanolaQty').innerText) * 6950;
+            total += parseInt(document.getElementById('pepperoniQty').innerText) * 6950;
+            document.getElementById('totalAmount').innerText = total;
+        }
+
+        function pay() {
+            if (total === 0) {
+                alert("¡Por favor selecciona al menos una pizza!");
+            } else {
+                document.getElementById('messageAlert').innerText = "¡Gracias por tu compra!";
+                document.getElementById('messageAlert').style.display = "block";
+                
+                
+                document.getElementById('napolitanaQty').innerText = 0;
+                document.getElementById('espanolaQty').innerText = 0;
+                document.getElementById('pepperoniQty').innerText = 0;
+
+                
+                total = 0;
+                document.getElementById('totalAmount').innerText = total;
+
+                
+                setTimeout(() => {
+                    document.getElementById('messageAlert').style.display = "none";
+                }, 3000);
+            }
+        }
+
+        function clearRegisterForm() {
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('registerError').innerText = '';
+            document.getElementById('registerError').style.display = "none";
+        }
+
+        function clearLoginForm() {
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').innerText = '';
+            document.getElementById('loginError').style.display = "none";
+        }
+
+        $('#registerModal').on('show.bs.modal', clearRegisterForm);
+        $('#loginModal').on('show.bs.modal', clearLoginForm);
+
+        document.getElementById('registerForm').onsubmit = function(e) {
+            e.preventDefault();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('registerError');
+
+            if (password.length < 6) {
+                errorMessage.innerText = "La contraseña debe tener al menos 6 caracteres.";
+                errorMessage.style.display = "block";
+            } else if (password !== confirmPassword) {
+                errorMessage.innerText = "Las contraseñas no coinciden.";
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+                
+                alert("Registro exitoso.");
+                $('#registerModal').modal('hide');
+            }
+        };
+
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            const password = document.getElementById('loginPassword').value;
+            const errorMessage = document.getElementById('loginError');
+
+            if (password.length < 6) {
+                errorMessage.innerText = "La contraseña debe tener al menos 6 caracteres.";
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+                
+                alert("Inicio de sesión exitoso.");
+                $('#loginModal').modal('hide');
+            }
+        };
+    </script>
+</body>
+</html>
+
+
